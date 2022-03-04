@@ -1,6 +1,6 @@
 Package: soundClass
 Title: Sound Classification Using Convolutional Neural Networks
-Version: 0.0.9
+Version: 0.0.9.1
 Author: Bruno Silva [aut, cre]
 Maintainer: Bruno Silva <bmsasilva@gmail.com>
 Description: Provides an all-in-one solution for automatic classification of 
@@ -32,6 +32,6 @@ Depends: shinyBS, htmltools
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-02-01 09:37:28 UTC; bruno
+Packaged: 2022-03-04 15:00:16 UTC; bruno
 Repository: CRAN
-Date/Publication: 2022-02-01 19:30:02 UTC
+Date/Publication: 2022-03-04 16:50:05 UTC
