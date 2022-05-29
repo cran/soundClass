@@ -343,14 +343,12 @@ achieved by running the function install_keras(). If prompted to install
 ‘miniconda’ type ‘Y’ to install it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>keras<span class="sc">::</span><span class="fu">install_keras</span>() <span class="co"># only needed before first use of soundClass</span></span></code></pre></div>
 <p>To run the example, external data must be downloaded and
-uncompressed. We first start by creating a new folder to store the data.
-We define that folder as the working directory for convenience:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>folder_path <span class="ot">&lt;-</span> <span class="st">&quot;~/data_example/&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(folder_path)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(folder_path)</span></code></pre></div>
+uncompressed. We define that folder as the working directory and rename
+it to “data_example” for convenience:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/path_to_extracted_folder/&quot;</span>)</span></code></pre></div>
 <p>The data should now be manually downloaded to the new folder and
-unziped: <a href="https://drive.google.com/file/d/1bXYRRo1YskxWcsYbk4w-whtaf7DKbFLs/view?usp=sharing" class="uri">https://drive.google.com/file/d/1bXYRRo1YskxWcsYbk4w-whtaf7DKbFLs/view?usp=sharing</a>
-The downloaded data includes an already created annotations database, as
+unziped: <a href="https://doi.org/10.6084/m9.figshare.19550605" class="uri">https://doi.org/10.6084/m9.figshare.19550605</a> The
+downloaded data includes an already created annotations database, as
 well as the necessary recordings for training and validation. The
 database was created with the app_label(), as there is no way of
 creating it by scripting, and contains the annotations of relevant and
@@ -366,7 +364,7 @@ unzip, the data_example folder should have the following structure:</p>
 copied to an external folder for easy access, specially for using the
 app_model():</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;model_architectures&quot;</span>, <span class="st">&quot;model_vgg_sequential.R&quot;</span>, <span class="at">package=</span><span class="st">&quot;soundClass&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(model_path, <span class="st">&quot;~/data_example/&quot;</span>) <span class="co"># Copy custom blank model to the folder &#39;data_example&#39;</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(model_path, <span class="st">&quot;.&quot;</span>) <span class="co"># Copy custom blank model to the folder &#39;data_example&#39;</span></span></code></pre></div>
 <p>If an annotations database already exists, there are two ways of
 using the package to fit or to run a fitted model: 1) by using the
 app_model() or 2) by scripting as shown in this example. To create the
@@ -387,26 +385,19 @@ are the target, we chose appropriate settings based on bibliography:</p>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># app_model()</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>train_calls <span class="ot">&lt;-</span> <span class="fu">spectro_calls</span>(</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">files_path =</span> <span class="st">&quot;~/data_example/training_recordings/&quot;</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">db_path =</span> <span class="st">&quot;~/data_example/db_bat_calls.sqlite3&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">files_path =</span> <span class="st">&quot;./training_recordings/&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">db_path =</span> <span class="st">&quot;./db_bat_calls.sqlite3&quot;</span>,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec_size =</span> <span class="dv">20</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">window_length =</span> <span class="fl">0.5</span>, </span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">frequency_resolution =</span> <span class="dv">1</span>,</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">overlap =</span>  <span class="fl">0.5</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dynamic_range =</span> <span class="dv">120</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">dynamic_range =</span> <span class="dv">100</span>,</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">freq_range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">80</span>),</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">tx =</span> <span class="st">&quot;auto&quot;</span>,</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1002</span>)</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># save the object to disk</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(train_calls, <span class="at">file =</span> <span class="st">&quot;train_calls.RDATA&quot;</span>)</span></code></pre></div>
-<p>To run a a fitted model later, some information regarding the
-parameters used for creating the training spectrograms will be needed.
-These data can be obtained from the train_calls object:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">train_metadata</span>(train_calls)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># save the object to disk</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(metadata, <span class="at">file =</span> <span class="st">&quot;metadata.RDATA&quot;</span>)</span></code></pre></div>
 <p>Once the data has been prepared, a blank model must be loaded into R
 and compiled. A pre-defined model is supplied with the package. Two
 variables must be defined in the global environment before loading the
@@ -415,25 +406,25 @@ number of columns, number of channels)” and the number of classes
 (num_classes). These values can be found in the metadata object created
 with train_metada(). Please note that the number of channels is always
 1, as we are working with grayscale images:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>input_shape <span class="ot">&lt;-</span> <span class="fu">c</span>(metadata<span class="sc">$</span>parameters<span class="sc">$</span>img_rows, metadata<span class="sc">$</span>parameters<span class="sc">$</span>img_cols, <span class="dv">1</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>num_classes <span class="ot">&lt;-</span> metadata<span class="sc">$</span>parameters<span class="sc">$</span>num_classes</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;model_architectures&quot;</span>, <span class="st">&quot;model_vgg_sequential.R&quot;</span>, <span class="at">package=</span><span class="st">&quot;soundClass&quot;</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(model_path, <span class="at">local=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>input_shape <span class="ot">&lt;-</span> <span class="fu">c</span>(metadata<span class="sc">$</span>parameters<span class="sc">$</span>img_rows, metadata<span class="sc">$</span>parameters<span class="sc">$</span>img_cols, <span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>num_classes <span class="ot">&lt;-</span> metadata<span class="sc">$</span>parameters<span class="sc">$</span>num_classes</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>model_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;model_architectures&quot;</span>, <span class="st">&quot;model_vgg_sequential.R&quot;</span>, <span class="at">package=</span><span class="st">&quot;soundClass&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(model_path, <span class="at">local =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>With the training data prepared and the blank model loaded, the
 parameters for compiling and fitting the model must be set. Please note
 that as we are using classification models, both parameters “loss” and
 “metrics” should always be set as they are in this example. The other
 parameters can be tuned as desired. For further information about the
 parameters in the optimizer please refer to Keras documentation: <a href="https://keras.io/api/" class="uri">https://keras.io/api/</a>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> model <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  keras<span class="sc">::</span><span class="fu">compile</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">optimizer =</span> <span class="fu">optimizer_sgd</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">learning_rate =</span> <span class="fl">0.01</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">momentum =</span> <span class="fl">0.9</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">nesterov =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">loss =</span> <span class="st">&#39;categorical_crossentropy&#39;</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">metrics =</span> <span class="st">&#39;accuracy&#39;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a> model <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  keras<span class="sc">::</span><span class="fu">compile</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">optimizer =</span> keras<span class="sc">::</span><span class="fu">optimizer_sgd</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">learning_rate =</span> <span class="fl">0.01</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">momentum =</span> <span class="fl">0.9</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">nesterov =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="at">loss =</span> <span class="st">&#39;categorical_crossentropy&#39;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>   <span class="at">metrics =</span> <span class="st">&#39;accuracy&#39;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>The model is now ready to be fitted. Three callbacks (objects that
 can perform actions at various stages of training) are defined: 1) early
 stopping, 2) model checkpoint and 3) CSV logger. These objects permit
@@ -445,18 +436,25 @@ further use and 3) save to disk the log (the workfolder in this example)
 of the training process. For further information about the callbacks
 available and their usage please refer to Keras documentation (<a href="https://keras.io/api/" class="uri">https://keras.io/api/</a>). To
 fit the model the function keras::fit() is used:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a> model <span class="sc">%&gt;%</span> keras<span class="sc">::</span><span class="fu">fit</span>(train_calls<span class="sc">$</span>data_x,</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>        train_calls<span class="sc">$</span>data_y,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">batch_size =</span> <span class="dv">512</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">epochs =</span> <span class="dv">20</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">callbacks =</span> <span class="fu">list</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">callback_early_stopping</span>(<span class="at">patience =</span> <span class="dv">4</span>, <span class="at">monitor =</span> <span class="st">&#39;val_accuracy&#39;</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="fu">callback_model_checkpoint</span>(<span class="st">&quot;./fitted_model.hdf5&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">monitor =</span> <span class="st">&quot;val_accuracy&quot;</span>, <span class="at">save_best_only =</span> T),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">callback_csv_logger</span>(<span class="st">&quot;./fitted_model_log.csv&quot;</span>)),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">shuffle =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">validation_split =</span> <span class="fl">0.3</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">verbose =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> model <span class="sc">%&gt;%</span> keras<span class="sc">::</span><span class="fu">fit</span>(train_calls<span class="sc">$</span>data_x,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        train_calls<span class="sc">$</span>data_y,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">batch_size =</span> <span class="dv">128</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">epochs =</span> <span class="dv">20</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">callbacks =</span> <span class="fu">list</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>         keras<span class="sc">::</span><span class="fu">callback_early_stopping</span>(<span class="at">patience =</span> <span class="dv">4</span>, <span class="at">monitor =</span> <span class="st">&#39;val_accuracy&#39;</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>         keras<span class="sc">::</span><span class="fu">callback_model_checkpoint</span>(<span class="st">&quot;./fitted_model.hdf5&quot;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">monitor =</span> <span class="st">&quot;val_accuracy&quot;</span>, <span class="at">save_best_only =</span> T),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         keras<span class="sc">::</span><span class="fu">callback_csv_logger</span>(<span class="st">&quot;./fitted_model_log.csv&quot;</span>)),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">shuffle =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">validation_split =</span> <span class="fl">0.3</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">verbose =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>To run a a fitted model later, some information regarding the
+parameters used for creating the training spectrograms will be needed.
+These data can be obtained from the train_calls object:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">train_metadata</span>(train_calls)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># save the object to disk</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(metadata, <span class="at">file =</span> <span class="st">&quot;./fitted_model_metadata.RDATA&quot;</span>)</span></code></pre></div>
 <p>The fitted model and an additional log file are saved to disk in the
 working folder for further use in the classification of novel
 recordings. To validate our model, we use recordings not used to
@@ -466,10 +464,10 @@ The classification is applied to the recordings with function auto_id()
 and the results are saved to a folder created in the same folder where
 the recordings are, in this cased named “output”:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auto_id</span>(<span class="at">model_path =</span> <span class="st">&quot;./fitted_model.hdf5&quot;</span>,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">metadata =</span> metadata,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">file_path =</span> <span class="st">&quot;~/data_example/validation_recordings/&quot;</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">metadata =</span> <span class="st">&quot;./fitted_model_metadata.RDATA&quot;</span>, <span class="co"># or &quot;./fitted_model_metadata.RDATA&quot; (the path to the previously saved metadata file)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">file_path =</span> <span class="st">&quot;./validation_recordings/&quot;</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">out_file =</span> <span class="st">&quot;id_results&quot;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">out_dir =</span> <span class="st">&quot;~/data_example/validation_recordings/output/&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">out_dir =</span> <span class="st">&quot;./validation_recordings/output/&quot;</span>,</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">save_png =</span> <span class="cn">TRUE</span>,          </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">win_size =</span> <span class="dv">40</span>,</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">remove_noise =</span> <span class="cn">TRUE</span>,</span>

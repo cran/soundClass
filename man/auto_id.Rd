@@ -13,16 +13,18 @@ plot2console = FALSE, remove_noise = TRUE, recursive = FALSE, tx = 1)
 
 \item{update_progress}{Progress bar only to be used inside shiny.}
 
-\item{metadata}{The object created with the function spectro_calls()
-containing the parameters used to fit the model.}
+\item{metadata}{The object created with the function train_metadata()
+containing the parameters used to fit the model, or the path to the saved
+RDATA file.}
 
-\item{file_path}{Character. Path to the folder containing recordings.}
+\item{file_path}{Character. Path to the folder containing recordings to be
+classified by the fitted model.}
 
 \item{out_file}{Character. Name of the output file to save the results.
 Will be used to name the csv file and the sqlite database.}
 
 \item{out_dir}{Character. Path to the folder where the output results will
-be stored. Will be created if it doesn't exist already}
+be stored. Will be created if it doesn't exist already.}
 
 \item{save_png}{Logical. Should a spectrogram of the classified recordings
 with the identified event(s) and respective classification(s) be saved

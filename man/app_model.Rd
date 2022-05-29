@@ -30,7 +30,7 @@ buttons/boxes to input required user data:
 training recordings
 \item Time expanded -- choose the correct time expansion factor, normally
 only used in recorders specifically intended for bat recordings. Can take
-the values "auto", 1 or 10. If the recording is not time expanded the value
+the values "auto", 1 or 10. If the recording is in real time the value
 must be 1. If it's time expanded, the value 10 or "auto" can be selected.
 If "auto" is selected it is assumed that sampling rates < 50kHz
 corresponds to a value of 10 and sampling rates > 50kHz to corresponds to a
@@ -102,7 +102,7 @@ corresponds to a value of 10 and sampling rates > 50kHz to corresponds to a
 value of 1
 \item Output file -- the name of the files to store the results of the
 classification
-\item Non-relevant -- does the fitted model includes a non-relevant class?
+\item Irrelevant -- does the fitted model includes an irrelevant class?
 \item Export plots -- should a spectrogram of the classified recordings be
 saved to disk?
 }

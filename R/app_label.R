@@ -7,8 +7,8 @@
 #'  \item Create database -- if no database exists to store the annotations,
 #'  use this button to create one
 #'  \item Choose database -- choose the database to store the annotations
-#'  \item Butterworth filter -- indicate low and high frequencies in kHz to 
-#'  filter the recordings
+#'  \item Butterworth filter -- check box to apply filter and 
+#'  indicate low and high frequencies in kHz to filter the recordings
 #'  \item Time expanded -- only used in recorders specifically intended for
 #'  bat recordings. Can take any numeric value. If the recording is not time
 #'  expanded the value must be set to 1. If it is time expanded the numeric
@@ -102,10 +102,8 @@ app_label <- function() {
           width = "100%"
         ),
         htmltools::hr(),
-        htmltools::h5(
-          "Butterworth filter (kHz)",
-          align = "center"
-        ),
+         shiny::checkboxInput("but_filt", "Butterworth filter (kHz)",
+                              value = FALSE, width = NULL),
         shiny::fluidRow(
           shiny::column(
             width = 6,
@@ -113,7 +111,7 @@ app_label <- function() {
             shiny::textInput(
               inputId = "low",
               label = "Low",
-              value = "10"
+              value = "0"
             )
           ),
           shiny::column(
@@ -130,10 +128,15 @@ app_label <- function() {
           shiny::column(
           width = 12,
           align = "center",
-          shiny::numericInput(
+          shiny::selectInput(
             inputId = "tx",
             label = "Time expanded",
-            value = "10"
+            choices = c(
+              "1" = "1",
+              "10" = "10",
+              "auto" = "auto"
+            ),
+            selected = "1"
           )
           )
         ),
@@ -147,8 +150,8 @@ app_label <- function() {
         htmltools::hr(),
         shinyFiles::shinyDirButton(
           id = "noise_folder",
-          label = "Add non-relevant",
-          title = "Add non-relevant",
+          label = "Add irrelevant",
+          title = "Add irrelevant",
           style = "width:100%"
         )
       ),
@@ -228,11 +231,18 @@ app_label <- function() {
                   choices = c(
                     "1 ms" = "1",
                     "2 ms" = "2",
-                    "3 ms" = "3",
                     "4 ms" = "4",
-                    "5 ms" = "5"
+                    "10 ms" = "10",
+                    "20 ms" = "20",
+                    "40 ms" = "40",
+                    "100 ms" = "100",
+                    "200 ms" = "200",
+                    "400 ms" = "400",
+                    "1000 ms" = "1000",
+                    "2000 ms" = "2000",
+                    "4000 ms" = "4000"
                   ),
-                  selected = "5"
+                  selected = "4"
                 )
               )
             ),
@@ -243,12 +253,14 @@ app_label <- function() {
                   inputId = "timeStep",
                   label = "Overlap",
                   choices = c(
+                    "50%" = "0.5",
+                    "55%" = "0.45",
                     "60%" = "0.4",
+                    "65%" = "0.35",
                     "70%" = "0.3",
-                    "80%" = "0.2",
-                    "90%" = "0.1"
+                    "75%" = "0.25"
                   ),
-                  selected = "0.2"
+                  selected = "0.5"
                 )
               ),
               shiny::column(
@@ -257,11 +269,9 @@ app_label <- function() {
                   inputId = "freqResolution",
                   label = "Resolution",
                   choices = c(
-                    "low resolution" = "1",
-                    "medium resolution" = "4",
-                    "high resolution" = "8"
+                    "low resolution" = "1"
                   ),
-                  selected = "4"
+                  selected = "1"
                 )
               )
             ),
@@ -389,11 +399,11 @@ app_label <- function() {
         shiny::need(
          input$files != "",
           "Analysis steps:
-1) Select buterrworth filter limits
-2) Input the time expanded factor of the recordings or leave '1' for no time expanded
+1) Select buterworth filter limits if desired
+2) Input the time expanded factor of the recordings. Choose '1' for no time expanded, or 'auto' for bat recordings
 3) Select folder with recordings
 4) If needed, create new database to store recording labels
-5) Select pre-existing database to store recording labels
+5) Select database to store recording labels
 6) Select events by clicking in the spectrogram on the middle of the event of interest (bat call, bird song, etc)
 7) Press 'Set labels' button to add labels to database
 8) Repeat steps 6 and 7 if more than one set of events is present in the recording
@@ -411,12 +421,13 @@ Spectrogram visualization:
              )
       )
 
+      tx <- ifelse(input$tx == "auto", "auto", as.numeric(input$tx))
       sound <- import_audio(
         path = input$files,
-        butt = TRUE,
+        butt = input$but_filt,
         low = as.numeric(input$low),
         high = as.numeric(input$high),
-        tx = as.numeric(input$tx)
+        tx = tx
       )
       return(sound)
     })
@@ -572,6 +583,7 @@ Spectrogram visualization:
           sound <-
             import_audio(
               path = paste0(folder_path, "/", noise_files[i]),
+              butt = input$but_filt,
               low = as.numeric(input$low),
               high = as.numeric(input$high)
             )
